@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>William Nguyen's CS Portfolio</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap"
+    rel="stylesheet"
+  />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+  />
+  <style>
+    :root {
+      --text-color: white;
+      --bg-color: black;
+      --link-color: white;
+      --link-hover-color: grey;
+      --icon-color: white;
+    }
+    [data-theme="light"] {
+      --text-color: black;
+      --bg-color: white;
+      --link-color: black;
+      --link-hover-color: lightgrey;
+      --icon-color: black;
+    }
+    /* Base styles */
+    body {
+      font-family: 'Open Sans', sans-serif;
+      /* Responsive text scaling: min 14px, max 18px, scales with viewport width */
+      font-size: clamp(14px, 2vw, 18px);
+      line-height: 1.6;
+      color: var(--text-color);
+      background-color: var(--bg-color);
+      margin: 0;
+      padding: 0;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    /* Header styles */
+    header.top-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      background-color: var(--bg-color);
+      border-bottom: 1px solid var(--text-color);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .navigation {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+    .navigation a,
+    .navigation button {
+      color: var(--link-color);
+      text-decoration: none;
+      background: none;
+      border: none;
+      font-size: 1em;
+      transition: color 0.3s;
+      cursor: pointer;
+    }
+    .navigation a:hover,
+    .navigation button:hover {
+      color: var(--link-hover-color);
+    }
+    .theme-toggle {
+      cursor: pointer;
+      background: none;
+      border: none;
+      font-size: 1.5em;
+    }
+    /* Main content container */
+    main.content {
+      padding: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    main.content > div {
+      margin-bottom: 40px;
+    }
+    /* Hide all sections by default */
+    .name-section,
+    .skills-section,
+    .experiences-section,
+    .resume-section,
+    .project-container,
+    .contact-container {
+      display: none;
+    }
+    /* Home Section: Fixed and centered on the screen */
+    .name-section {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      font-size: 2.5em; /* Larger text */
+      z-index: 0;
+      width: 100%;
+    }
+    .name-section .description {
+      font-size: 0.7em;
+      margin-top: 10px;
+    }
+    /* Larger headings for these sections */
+    .skills-section h2,
+    .project-container h2,
+    .experiences-section h2 {
+      font-size: 2.2em;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+    /* Larger overall font size in skills, projects, and experiences */
+    .skills-section,
+    .project-container,
+    .experiences-section {
+      font-size: 1.2em;
+    }
+    .project-name {
+      font-size: 1.3em;
+      font-weight: 600;
+    }
+    .project-description,
+    .github-link {
+      margin-top: 10px;
+      font-size: 1em;
+    }
+    .project-item {
+      margin-bottom: 30px;
+    }
+    /* Contact Section: Completely fixed in the center */
+    .contact-container {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      /* Remove min-height since we're using fixed positioning */
+      z-index: 0;
+    }
+    .contact-info {
+      font-size: 1.2em;
+      max-width: 600px;
+      margin: 0 auto;
+      margin-bottom: 40px;
+      line-height: 1.5;
+    }
+    .contact-button-single {
+      background-color: var(--text-color);
+      color: var(--bg-color);
+      border: none;
+      border-radius: 5px;
+      padding: 15px 30px;
+      font-size: 1.1em;
+      cursor: pointer;
+    }
+    .contact-button-single:hover {
+      background-color: var(--link-hover-color);
+    }
+    .skills-list,
+    .experiences-content {
+      margin-top: 20px;
+      line-height: 1.5em;
+    }
+    .resume-section embed {
+      width: 100%;
+      height: 80vh;
+      border: none;
+    }
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .navigation {
+        flex-direction: column;
+        gap: 10px;
+      }
+      main.content {
+        padding: 10px;
+      }
+      header.top-bar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .contact-info {
+        font-size: 1em;
+        margin-bottom: 20px;
+      }
+    }
+    .icon {
+      margin-right: 8px;
+      color: var(--icon-color);
+    }
+  </style>
+</head>
+<body data-theme="dark">
+  <!-- Header with Navigation -->
+  <header class="top-bar">
+    <div class="navigation">
+      <a href="#home" class="nav-button" onclick="showHome(event)">
+        <i class="fas fa-home icon"></i>Home
+      </a>
+      <a href="#skills" class="nav-button" onclick="showSection(event, 'skills-section')">
+        <i class="fas fa-bookmark icon"></i>Skills
+      </a>
+      <a href="#projects" class="nav-button" onclick="showSection(event, 'projects-section')">
+        <i class="fas fa-th icon"></i>Projects
+      </a>
+      <a href="#experiences" class="nav-button" onclick="showSection(event, 'experiences-section')">
+        <i class="fas fa-briefcase icon"></i>Experiences
+      </a>
+      <a href="#resume" class="nav-button" onclick="showSection(event, 'resume-section')">
+        <i class="fas fa-file-alt icon"></i>Resume
+      </a>
+      <button class="theme-toggle" onclick="toggleTheme()">
+        <i class="fas fa-moon icon"></i>
+      </button>
+      <button class="contact-button" onclick="showSection(event, 'contact-section')">
+        Contact
+      </button>
+    </div>
+  </header>
+
+  <!-- Main content container -->
+  <main class="content">
+    <!-- Home Section -->
+    <div class="name-section" id="home-section">
+      <div style="font-size:1.5em;">Hi,</div>
+      I'm William Nguyen
+      <div class="description">Computer Science Major @ UIC</div>
+    </div>
+
+    <!-- Skills Section -->
+    <div class="skills-section" id="skills-section">
+      <h2>Skills</h2>
+      <div class="skills-list">
+        <strong>Programming Languages:</strong> Proficient in Python, C++, C, Java, and HTML.<br>
+        <strong>Software Development:</strong> Proficient with object-oriented design, design patterns, software reuse, and version control systems like Git.<br>
+        <strong>System Programming:</strong> Knowledgeable in low-level programming, memory management, and system-level I/O operations.<br>
+        <strong>Computer Architecture:</strong> Understanding of machine organization, processor architecture, pipelining, and memory hierarchy.<br>
+        <strong>Software Tools:</strong> Proficient in using software tools (Visual Studio, Eclipse, Git, GitHub), debugging tools, and software testing frameworks.<br>
+        <strong>GUI Development:</strong> Familiar in designing and developing basic graphical user interfaces.
+      </div>
+    </div>
+
+    <!-- Projects Section -->
+    <div class="project-container" id="projects-section">
+      <h2>Projects</h2>
+      <div class="project-item">
+        <div class="project-name">Personal Website</div>
+        <div class="project-description">
+          Built a responsive personal website using HTML and CSS to highlight my skills, projects, and resume in a streamlined layout.
+        </div>
+      </div>
+      <hr />
+      <div class="project-item">
+        <div class="project-name">Three Card Poker Game (Client/Server in Java)</div>
+        <div class="project-description">
+          Implemented a networked 3 Card Poker game that allows multiple clients to connect via Java Sockets. 
+          Each client runs in its own thread, showcasing event-driven design, concurrency, and networking fundamentals.
+        </div>
+        <a href="https://github.com/Mystronomy/Three-Card-Poker-Game" class="github-link" target="_blank">
+          View on GitHub
+        </a>
+      </div>
+      <hr />
+      <div class="project-item">
+        <div class="project-name">Data Structure Library (HashMap &amp; Queue in Java)</div>
+        <div class="project-description">
+          Created a custom data structure library featuring generic HashMap and Queue implementations from scratch. 
+          Leveraged the Iterator design pattern and a Queue for collision resolution, aiding in efficient data handling.
+        </div>
+        <a href="https://github.com/Mystronomy/Data-Structure-Library-Hashmap-Queue-in-Java-" class="github-link" target="_blank">
+          View on GitHub
+        </a>
+      </div>
+      <hr />
+      <div class="project-item">
+        <div class="project-name">Discord Music Bot (Python &amp; LavaLink)</div>
+        <div class="project-description">
+          Developed a feature-rich Discord bot to stream audio from various sources, including YouTube and Spotify. 
+          If no direct link is provided, the bot intelligently searches for the most popular relevant track 
+          and starts playback automatically. This project highlights the use of APIs, real-time communication, 
+          and robust search algorithms.
+        </div>
+        <a href="https://github.com/Mystronomy/Discord-Music-Bot" class="github-link" target="_blank">
+          View on GitHub
+        </a>
+      </div>
+    </div>
+
+    <!-- Experiences Section -->
+    <div class="experiences-section" id="experiences-section">
+      <h2>Experiences</h2>
+      <div class="experiences-content">
+        During my time at UIC, I immersed myself in foundational computer science principles and worked on numerous assignments and coding projects. Key achievements include:
+        <ul>
+          <li>Designing and implementing efficient algorithms, analyzing complexity, and optimizing performance.</li>
+          <li>Utilizing data structures (linked lists, trees, graphs) to manage diverse sets of information.</li>
+          <li>Collaborating with peers on group projects via Git and GitHub for seamless version control.</li>
+          <li>Dabbling in both object-oriented and functional programming paradigms for broader exposure.</li>
+          <li>Participating in hackathons and coding competitions to sharpen problem-solving skills.</li>
+        </ul>
+        <h3>Receptionist, 312 Nails &amp; Spa, Chicago, Illinois (05/2022 – 08/2023)</h3>
+        <ul>
+          <li>Welcomed and checked in clients, creating a friendly and positive salon atmosphere.</li>
+          <li>Maintained detailed client records using scheduling software to streamline appointment bookings.</li>
+          <li>Coordinated staff schedules and notified team members of last-minute changes, minimizing downtime and maximizing productivity.</li>
+          <li>Handled multi-line phone systems to answer inquiries, confirm appointments, and ensure smooth front-desk operations.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Resume Section -->
+    <div class="resume-section" id="resume-section">
+      <h2>Resume</h2>
+      <embed src="Resume.pdf#toolbar=0&navpanes=0&scrollbar=0" type="application/pdf" />
+    </div>
+
+    <!-- Contact Section -->
+    <div class="contact-container" id="contact-section">
+      <h2>Contact Me</h2>
+      <div class="contact-info">
+        Got questions? Feel free to reach out by clicking the button below!
+        <br><br>
+        Once clicked, your default mail client will open with a new message addressed to
+        <strong>wilngu78@gmail.com</strong>. I look forward to hearing from you.
+      </div>
+      <button class="contact-button-single" onclick="openEmailClient()">Contact Me</button>
+    </div>
+  </main>
+
+  <script>
+    function toggleTheme() {
+      const body = document.body;
+      const theme = body.dataset.theme === 'dark' ? 'light' : 'dark';
+      body.dataset.theme = theme;
+      const themeIcon = document.querySelector('.theme-toggle .icon');
+      if (theme === 'dark') {
+        themeIcon.classList.replace('fa-sun', 'fa-moon');
+      } else {
+        themeIcon.classList.replace('fa-moon', 'fa-sun');
+      }
+    }
+    function showSection(event, sectionId) {
+      if (event) {
+        event.preventDefault();
+      }
+      const sections = document.querySelectorAll(
+        '.name-section, .skills-section, .experiences-section, .resume-section, .project-container, .contact-container'
+      );
+      sections.forEach(section => (section.style.display = 'none'));
+      const target = document.getElementById(sectionId);
+      if (target) {
+        target.style.display = 'block';
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+    function showHome(event) {
+      if (event) event.preventDefault();
+      showSection(event, 'home-section');
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+      showHome();
+    });
+    function openEmailClient() {
+      const subject = encodeURIComponent('Hello from your Website!');
+      const body = encodeURIComponent('Hi William, \n\nI would like to get in touch about...');
+      window.location.href = `mailto:wilngu78@gmail.com?subject=${subject}&body=${body}`;
+    }
+  </script>
+</body>
+</html>
